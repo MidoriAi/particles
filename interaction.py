@@ -4,11 +4,11 @@ from random import randint
 import math
 
 W = 800
-s = pg.display.set_mode((W, W))
-clock = pg.time.Clock()
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+
+particle_num = int(input('Enter the number of particles you want: '))
 
 class Particle:
     def __init__(self, dx, dy, x, y, radius, color):
@@ -26,7 +26,7 @@ class Particle:
 def color_generator(): return [randint(100, 255) for _ in range(3)]
 
 particle_list = []
-for i in range(400): particle_list.append(Particle(randint(1, 2), randint(1, 3), randint(10, W), randint(10, W), randint(1, 10), color_generator()))
+for i in range(particle_num): particle_list.append(Particle(randint(1, 3), randint(1, 3), randint(10, W), randint(10, W), randint(1, 10), color_generator()))
 
 def animate():
     mx = pg.mouse.get_pos()[0]
@@ -39,8 +39,10 @@ def animate():
         p.y += p.dy
 
         if math.fabs(mx - p.x) < 50 and math.fabs(my - p.y) < 50 and p.radius < 200: p.radius += 1
-        elif p.radius > p.min_radius: p.radius -= 1
+        elif p.radius > p.min_radius: p.radius -= 0.5
 
+s = pg.display.set_mode((W, W))
+clock = pg.time.Clock()
 
 while True:
     s.fill(WHITE)
